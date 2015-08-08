@@ -127,7 +127,7 @@
 			for (j = 0; j < p.length; j++) {
 
 				var time = new Date();
-				var requestedTime = Math.round(d.getTime()/100+50)*100;
+				var requestedTime = Math.round(time.getTime()/100+50)*100;
 				var st = (p[j].StartTime < requestedTime) ? requestedTime : p[j].StartTime;
 				var et = (p[j].EndTime > requestedTime + 7200) ? requestedTime + 7200 : p[j].EndTime;
 				var w = (et - st)/72;
