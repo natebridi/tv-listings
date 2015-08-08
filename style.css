@@ -1,0 +1,91 @@
+* {
+	font: 400 20px/1.2em 'Work Sans';
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+.channel {     
+	color: #556270;
+	padding: 40px 20px 15px 20px;
+}
+.channel .number {
+	float: right;
+	color: #FF6B6B;
+}
+.program-wrap {
+	background: linear-gradient(90deg, #556270 10%, #FF6B6B 90%); 
+	padding: 12px 0;
+}
+.program {
+	min-width: 100%;
+	padding: 15px 20px;
+	color: #fff;
+	position: relative;
+}
+.program:last-of-type {
+	border-bottom: 0;
+}
+.program span {
+	display: block;
+	margin: 0 0 5px 0;
+}
+.program span.time {
+	font-size: 14px;
+}
+.program.started-earlier:before,
+.program.finishes-later:before {
+	content: '';
+    position: absolute;
+    left: -4px;
+    top: 53px;
+    font-size: 18px;
+    background-color: #556270;
+    transform: rotate(45deg);
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+}
+.program.finishes-later:before {
+	left: auto;
+	right: -4px;
+	background-color: #FF6B6B;
+}
+
+@media (min-width: 768px) {
+	.row {
+		padding-left: 130px;
+		width: 95%;
+		margin: 10px auto;
+	}
+	.channel {
+		float: left;
+		padding: 12px 0px;
+		width: 130px;
+		height: 120px;
+		margin-left: -130px;
+	}
+	.channel .number {
+		float: none;
+		display: block;
+	}
+	.program-wrap {
+		padding: 0;
+		display: flex;
+	}
+	.program {
+		padding: 12px 20px;
+		min-width: inherit;
+		float: left;
+		height: 120px;
+		border-left: 1px solid #fff;
+	}
+	.program span {
+		overflow: hidden;
+		max-height: 72px;   /* cut off very long titles */
+	}
+	.program span.time {
+		position: absolute;
+		bottom: 12px;
+		left: 20px;
+	}
+}
