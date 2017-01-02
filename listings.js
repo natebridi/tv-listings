@@ -117,34 +117,36 @@
 		channels.forEach(function (channel) {
 			var listing = 0;
 
-			while (d[listing].Channel.SourceId != channel.id && listing < d.length) { listing++; };
-
-			html.push('<div class="row">');
-			html.push('<div class="channel"><span class="name">' + channel.name + '</span><span class="number">' + d[listing].Channel.Number + '</span></div>');
-			html.push('<div class="program-wrap">');
+			while (listing < d.length && d[listing].Channel.SourceId != channel.id) { listing++; };
 			
-			var p = d[listing].ProgramSchedules;
-			for (j = 0; j < p.length; j++) {
-
-				var time = new Date();
-				var requestedTime = Math.round(time.getTime()/1000/100)*100;
-				var st = (p[j].StartTime < requestedTime) ? requestedTime : p[j].StartTime;
-				var et = (p[j].EndTime > requestedTime + 7200) ? requestedTime + 7200 : p[j].EndTime;
-				var w = (et - st)/72;
-
-				var timeClass = '';
-				if (p[j].StartTime < requestedTime) timeClass = 'started-earlier';
-				if (p[j].EndTime > requestedTime + 7200) timeClass = 'finishes-later';
+			if (listing < d.length) {
+				html.push('<div class="row">');
+				html.push('<div class="channel"><span class="name">' + channel.name + '</span><span class="number">' + d[listing].Channel.Number + '</span></div>');
+				html.push('<div class="program-wrap">');
 				
-				if (w > 5) {
-					html.push('<div class="program ' + timeClass + '" style="width:' + w + '%;">');
-					html.push('<span>' + p[j].Title + '</span>');
-					html.push('<span class="time">' + formatTime(p[j].StartTime) + '&ndash;' + formatTime(p[j].EndTime) + '</span></div>');
+				var p = d[listing].ProgramSchedules;
+				for (j = 0; j < p.length; j++) {
+	
+					var time = new Date();
+					var requestedTime = Math.round(time.getTime()/1000/100)*100;
+					var st = (p[j].StartTime < requestedTime) ? requestedTime : p[j].StartTime;
+					var et = (p[j].EndTime > requestedTime + 7200) ? requestedTime + 7200 : p[j].EndTime;
+					var w = (et - st)/72;
+	
+					var timeClass = '';
+					if (p[j].StartTime < requestedTime) timeClass = 'started-earlier';
+					if (p[j].EndTime > requestedTime + 7200) timeClass = 'finishes-later';
+					
+					if (w > 5) {
+						html.push('<div class="program ' + timeClass + '" style="width:' + w + '%;">');
+						html.push('<span>' + p[j].Title + '</span>');
+						html.push('<span class="time">' + formatTime(p[j].StartTime) + '&ndash;' + formatTime(p[j].EndTime) + '</span></div>');
+					}
+					
 				}
-				
+	
+				html.push('</div></div>');  // .program-wrap   // .row
 			}
-
-			html.push('</div></div>');  // .program-wrap   // .row
 		});
 
 		document.getElementById('listings').innerHTML = html.join('');
@@ -176,7 +178,3 @@
 	}
 
 })();
-
-
-
-
